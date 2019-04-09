@@ -1,5 +1,6 @@
 package sk.knet.dp.endpointshell
 
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import kotlin.String
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@EnableResourceServer
 class ExampleClient {
     @GetMapping("ExampleClient/exampleEndpoint")
     fun exampleEndpoint(@RequestParam name: String, @RequestParam name2: String) {

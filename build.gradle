@@ -28,12 +28,16 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-security', version: '2.1.2.RELEASE'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2', version: '2.1.2.RELEASE'
     
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-    
-    
 
+
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -60,6 +64,6 @@ compileTestKotlin {
 
 bootRun {
     if (project.hasProperty('args')) {
-        args project.args.split(',')
+        args project.args.split(',' as Closure)
     }
 }
