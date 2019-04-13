@@ -1,16 +1,19 @@
 package sk.knet.dp.endpointshell
 
+import kotlin.String
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import javax.annotation.security.RolesAllowed
 
 @RestController
 @EnableResourceServer
-class GeneratedExample {
-    @PostMapping("Vacuum/Transition1POST")
-    fun Transition1POST(
+class Example {
+    @RolesAllowed("ROLE_ExampleLABSDD_USERDDDS")
+    @PostMapping("Example/1")
+    fun post1(
             @RequestParam(value = "name") name: String,
             @RequestParam(value = "surname") surname: String,
             @RequestParam(value = "date_of_birth") date_of_birth: String,
@@ -20,89 +23,110 @@ class GeneratedExample {
             @RequestParam(value = "city", defaultValue = "") city: String,
             @RequestParam(value = "income") income: String,
             @RequestParam(value = "loan_amount") loan_amount: String
-    ) = "Helloworld"
+    ) {
+        print("not implemented")
+    }
 
-    @PostMapping("Vacuum/Transition5POST")
-    fun Transition5POST(
+    @PostMapping("Example/5")
+    fun post5(
             @RequestParam(value = "question_mortgage_lates") question_mortgage_lates: String,
             @RequestParam(value = "question_amount") question_amount: String,
             @RequestParam(value = "question_jobs") question_jobs: String
-    ) = "Helloworld"
+    ) {
+        print("not implemented")
+    }
 
-    @PostMapping("Vacuum/Transition14POST")
-    fun Transition14POST(@RequestParam(value = "reject_loanofficer_reason")
-                         reject_loanofficer_reason: String) = "Helloworld"
+    @PostMapping("Example/14")
+    fun post14(@RequestParam(value = "reject_loanofficer_reason")
+               reject_loanofficer_reason: String) {
+        print("not implemented")
+    }
 
-    @PostMapping("Vacuum/Transition26POST")
-    fun Transition26POST(@RequestParam(value = "reject_underwriter_reason")
-                         reject_underwriter_reason: String) = "Helloworld"
+    @PostMapping("Example/26")
+    fun post26(@RequestParam(value = "reject_underwriter_reason")
+               reject_underwriter_reason: String) {
+        print("not implemented")
+    }
 
-    @PostMapping("Vacuum/Transition35POST")
-    fun Transition35POST(
+    @PostMapping("Example/35")
+    fun post35(
             @RequestParam(value = "floor") floor: String,
             @RequestParam(value = "type") type: String,
             @RequestParam(value = "years", defaultValue = "") years: String,
             @RequestParam(value = "photo", defaultValue = "") photo: String
-    ) = "Helloworld"
+    ) {
+        print("not implemented")
+    }
 
-    @PostMapping("Vacuum/Transition39POST")
-    fun Transition39POST(
+    @PostMapping("Example/39")
+    fun post39(
             @RequestParam(value = "appraisal") appraisal: String,
             @RequestParam(value = "appraised_value") appraised_value: String,
             @RequestParam(value = "approved", defaultValue = "") approved: String
-    ) = "Helloworld"
-
-    @PostMapping("Vacuum/Transition48POST")
-    fun Transition48POST(@RequestParam(value = "delete_case") delete_case: String) = "Helloworld"
-
-    @PostMapping("Vacuum/Transition72POST")
-    fun Transition72POST(@RequestParam(value = "confirmation_insurance", defaultValue = "")
-                         confirmation_insurance: String) = "Helloworld"
-
-    @PostMapping("Vacuum/Transition78POST")
-    fun Transition78POST(@RequestParam(value = "payment", defaultValue = "") payment: String) =
-            "Helloworld"
-
-    @PostMapping("Vacuum/Transition92POST")
-    fun Transition92POST(@RequestParam(value = "confirmation_mortgage", defaultValue = "")
-                         confirmation_mortgage: String) = "Helloworld"
-
-    @PostMapping("Vacuum/Transition94POST")
-    fun Transition94POST(@RequestParam(value = "confirmation_insurance", defaultValue = "")
-                         confirmation_insurance: String) = "Helloworld"
-
-    @GetMapping("Vacuum/Transition5GET")
-    fun Transition5GET() = Transition5GETResult()
-
-    @GetMapping("Vacuum/Transition30GET")
-    fun Transition30GET() = Transition30GETResult()
-
-    @GetMapping("Vacuum/Transition39GET")
-    fun transition39GET() = Transition39GETResult()
+    ) {
+        print("not implemented")
+    }
 
 
-    @GetMapping("Vacuum/Transition53GET")
-    fun Transition53GET() = Transition53GETResult()
+    @PostMapping("Example/48")
+    fun post48(@RequestParam(value = "delete_case") delete_case: String) {
+        print("not implemented")
+    }
 
-    @GetMapping("Vacuum/Transition59GET")
-    fun Transition59GET() = Transition59GETResult()
+    @PostMapping("Example/72")
+    fun post72(@RequestParam(value = "confirmation_insurance", defaultValue = "")
+               confirmation_insurance: String) {
+        print("not implemented")
+    }
 
-    @GetMapping("Vacuum/Transition61GET")
-    fun Transition61GET() = Transition61GETResult()
+    @PostMapping("Example/78")
+    fun post78(@RequestParam(value = "payment", defaultValue = "") payment: String) {
+        print("not implemented")
+    }
 
-    @GetMapping("Vacuum/Transition72GET")
-    fun Transition72GET() = Transition72GETResult()
+    @PostMapping("Example/92")
+    fun post92(@RequestParam(value = "confirmation_mortgage", defaultValue = "")
+               confirmation_mortgage: String) {
+        print("not implemented")
+    }
 
-    @GetMapping("Vacuum/Transition78GET")
-    fun Transition78GET() = Transition78GETResult()
+    @PostMapping("Example/94")
+    fun post94(@RequestParam(value = "confirmation_insurance", defaultValue = "")
+               confirmation_insurance: String) {
+        print("not implemented")
+    }
 
-    @GetMapping("Vacuum/Transition96GET")
-    fun Transition96GET() = Transition96GETResult()
+    @GetMapping("Example/5")
+    fun get5() = get5Result()
 
-    @GetMapping("Vacuum/Transition155GET")
-    fun Transition155GET() = Transition155GETResult()
+    @GetMapping("Example/30")
+    fun get30() = get30Result()
 
-    class Transition5GETResult(
+    @GetMapping("Example/39")
+    fun get39() = get39Result()
+
+    @GetMapping("Example/53")
+    fun get53() = get53Result()
+
+    @GetMapping("Example/59")
+    fun get59() = get59Result()
+
+    @GetMapping("Example/61")
+    fun get61() = get61Result()
+
+    @GetMapping("Example/72")
+    fun get72() = get72Result()
+
+    @GetMapping("Example/78")
+    fun get78() = get78Result()
+
+    @GetMapping("Example/96")
+    fun get96() = get96Result()
+
+    @GetMapping("Example/155")
+    fun get155() = get155Result()
+
+    class get5Result(
             name: String = "",
             surname: String = "",
             income: String = "",
@@ -110,7 +134,7 @@ class GeneratedExample {
             score: String = ""
     )
 
-    class Transition30GETResult(
+    class get30Result(
             name: String = "",
             surname: String = "",
             income: String = "",
@@ -121,14 +145,14 @@ class GeneratedExample {
             score: String = ""
     )
 
-    class Transition39GETResult(
+    class get39Result(
             floor: String = "",
             type: String = "",
             years: String = "",
             photo: String = ""
     )
 
-    class Transition53GETResult(
+    class get53Result(
             name: String = "",
             surname: String = "",
             date_of_birth: String = "",
@@ -140,9 +164,9 @@ class GeneratedExample {
             loan_amount: String = ""
     )
 
-    class Transition59GETResult(confirmation_insurance: String = "", insurance: String = "")
+    class get59Result(confirmation_insurance: String = "", insurance: String = "")
 
-    class Transition61GETResult(
+    class get61Result(
             name: String = "",
             surname: String = "",
             date_of_birth: String = "",
@@ -155,11 +179,11 @@ class GeneratedExample {
             sign: String = ""
     )
 
-    class Transition72GETResult(insurance: String = "")
+    class get72Result(insurance: String = "")
 
-    class Transition78GETResult(loan_amount: String = "")
+    class get78Result(loan_amount: String = "")
 
-    class Transition96GETResult(payment: String = "")
+    class get96Result(payment: String = "")
 
-    class Transition155GETResult(status: String = "")
+    class get155Result(status: String = "")
 }
