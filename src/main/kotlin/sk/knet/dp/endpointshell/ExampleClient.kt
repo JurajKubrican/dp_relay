@@ -1,5 +1,6 @@
 package sk.knet.dp.endpointshell
 
+import io.swagger.annotations.ApiOperation
 import kotlin.String
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,6 +14,7 @@ import javax.annotation.security.RolesAllowed
 class Example {
     @RolesAllowed("ROLE_ExampleLABSDD_USERDDDS")
     @PostMapping("Example/1")
+    @ApiOperation(value = "List accounts for given customer", notes = "Roles: ")
     fun post1(
             @RequestParam(value = "name") name: String,
             @RequestParam(value = "surname") surname: String,
