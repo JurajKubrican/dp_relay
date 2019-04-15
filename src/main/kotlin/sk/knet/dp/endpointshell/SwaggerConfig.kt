@@ -1,6 +1,7 @@
 package sk.knet.dp.endpointshell
 
 
+import com.google.common.base.Predicates
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import springfox.documentation.builders.PathSelectors
@@ -18,7 +19,7 @@ class SwaggerConfig {
         return Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/actuator.*|/error")))
                 .build()
     }
 }
