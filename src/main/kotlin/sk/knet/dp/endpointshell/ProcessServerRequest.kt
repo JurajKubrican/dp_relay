@@ -1,5 +1,8 @@
 package sk.knet.dp.endpointshell
 
+import org.springframework.stereotype.Service
+
+@Service
 class ProcessServerRequest {
     fun get(netId: String, transitionId: String): Any {
         return {}
