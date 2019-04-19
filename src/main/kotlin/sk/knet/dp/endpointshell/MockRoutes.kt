@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile
 
 
 @RestController
-class Register {
+class MockRoutes {
     @PostMapping("/register")
     fun register(
             @RequestParam(value = "model") modelFile: MultipartFile,

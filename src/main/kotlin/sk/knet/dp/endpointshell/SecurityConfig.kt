@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 
 
 @Configuration
-class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
+class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(web: WebSecurity) {
