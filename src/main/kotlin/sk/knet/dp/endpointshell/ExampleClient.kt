@@ -78,12 +78,6 @@
 //            return ResponseEntity(errors.toString(), BAD_REQUEST)
 //        }
 //
-//        processServerRequest.post("Client","1", mapOf(
-//                1 to "x",
-//                2 to "y",
-//                -1 to "zz")
-//        )
-//
 //        return ResponseEntity("", OK)
 //    }
 //
@@ -118,7 +112,7 @@
 //    }
 //
 //    @PostMapping("Janko/14")
-//    @RolesAllowed("ROLE_JANKO_LOAN_OFFICER")
+//    @RolesAllowed("ROLE_USER")
 //    @ApiOperation(
 //            value = "Transition14",
 //            notes = "Allowed roles: [ROLE_JANKO_LOAN_OFFICER]"
