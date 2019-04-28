@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -17,17 +18,18 @@ import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @EnableResourceServer
-class Janko {
+class Janko2 {
     @Autowired
     lateinit var processServerRequest: ProcessServerRequest
 
-    @PostMapping("Janko/1")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @PostMapping("Janko2/1/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition1",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun post1(
+    fun perform1(
+            @PathVariable("instanceId") instanceId: String,
             @RequestParam(value = "name") @ApiParam(required = true) name: String,
             @RequestParam(value = "surname") @ApiParam(required = true) surname: String,
             @RequestParam(value = "date_of_birth") @ApiParam(required = true) date_of_birth: String,
@@ -36,7 +38,7 @@ class Janko {
             @RequestParam(value = "postal", defaultValue = "") @ApiParam(required = false)
             postal: String,
             @RequestParam(value = "city", defaultValue = "") @ApiParam(required = false, allowableValues
-            = "[]") city: String,
+            = """[]""") city: String,
             @RequestParam(value = "income") @ApiParam(required = true) income: String,
             @RequestParam(value = "loan_amount") @ApiParam(required = true) loan_amount: String
     ): ResponseEntity<String> {
@@ -71,21 +73,23 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "1",
+                instanceId,
                 mapOf( "name" to name , "surname" to surname , "date_of_birth" to date_of_birth
                         , "street" to street , "streetnumber" to streetnumber , "postal" to postal ,
                         "city" to city , "income" to income , "loan_amount" to loan_amount ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/5")
-    @RolesAllowed("ROLE_JANKO_BUREAU_AGENT")
+    @PostMapping("Janko2/5/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_BUREAU_AGENT")
     @ApiOperation(
             value = "Transition5",
-            notes = "Allowed roles: [ROLE_JANKO_BUREAU_AGENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_BUREAU_AGENT]"
     )
-    fun post5(
+    fun perform5(
+            @PathVariable("instanceId") instanceId: String,
             @RequestParam(value = "question_mortgage_lates") @ApiParam(required = true)
             question_mortgage_lates: String,
             @RequestParam(value = "question_amount") @ApiParam(required = true) question_amount: String,
@@ -104,21 +108,23 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "5",
+                instanceId,
                 mapOf( "question_mortgage_lates" to question_mortgage_lates , "question_amount"
                         to question_amount , "question_jobs" to question_jobs ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/14")
-    @RolesAllowed("ROLE_JANKO_LOAN_OFFICER")
+    @PostMapping("Janko2/14/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_LOAN_OFFICER")
     @ApiOperation(
             value = "Transition14",
-            notes = "Allowed roles: [ROLE_JANKO_LOAN_OFFICER]"
+            notes = "Allowed roles: [ROLE_JANKO2_LOAN_OFFICER]"
     )
-    fun post14(@RequestParam(value = "reject_loanofficer_reason") @ApiParam(required = true)
-               reject_loanofficer_reason: String): ResponseEntity<String> {
+    fun perform14(@PathVariable("instanceId") instanceId: String, @RequestParam(value =
+    "reject_loanofficer_reason") @ApiParam(required = true)
+    reject_loanofficer_reason: String): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if ( !Regex(".*").matches(reject_loanofficer_reason) ) {
             errors.add("reject_loanofficer_reason" +
@@ -126,20 +132,22 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "14",
+                instanceId,
                 mapOf( "reject_loanofficer_reason" to reject_loanofficer_reason ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/26")
-    @RolesAllowed("ROLE_JANKO_UNDERWRITER")
+    @PostMapping("Janko2/26/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
     @ApiOperation(
             value = "Transition26",
-            notes = "Allowed roles: [ROLE_JANKO_UNDERWRITER]"
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
     )
-    fun post26(@RequestParam(value = "reject_underwriter_reason") @ApiParam(required = true)
-               reject_underwriter_reason: String): ResponseEntity<String> {
+    fun perform26(@PathVariable("instanceId") instanceId: String, @RequestParam(value =
+    "reject_underwriter_reason") @ApiParam(required = true)
+    reject_underwriter_reason: String): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if ( !Regex(".*").matches(reject_underwriter_reason) ) {
             errors.add("reject_underwriter_reason" +
@@ -147,24 +155,27 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "26",
+                instanceId,
                 mapOf( "reject_underwriter_reason" to reject_underwriter_reason ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/35")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @PostMapping("Janko2/35/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition35",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun post35(
+    fun perform35(
+            @PathVariable("instanceId") instanceId: String,
             @RequestParam(value = "floor") @ApiParam(required = true) floor: String,
-            @RequestParam(value = "type") @ApiParam(required = true, allowableValues = """[House, Flat, Bungalow, Cabin]""") type: String,
-    @RequestParam(value = "years", defaultValue = "") @ApiParam(required = false) years: String,
-    @RequestParam(value = "photo", defaultValue = "") @ApiParam(required = false)
-    photo: MultipartFile
+            @RequestParam(value = "type") @ApiParam(required = true, allowableValues = """[House, Flat,
+                Bungalow, Cabin]""") type: String,
+            @RequestParam(value = "years", defaultValue = "") @ApiParam(required = false) years: String,
+            @RequestParam(value = "photo", defaultValue = "") @ApiParam(required = false)
+            photo: MultipartFile
     ): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if ( !Regex("\\d+").matches(floor) ) {
@@ -179,20 +190,22 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "35",
+                instanceId,
                 mapOf( "floor" to floor , "type" to type , "years" to years , "photo" to photo
                 ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/39")
-    @RolesAllowed("ROLE_JANKO_PROPERTY_APPRAISER")
+    @PostMapping("Janko2/39/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_PROPERTY_APPRAISER")
     @ApiOperation(
             value = "Transition39",
-            notes = "Allowed roles: [ROLE_JANKO_PROPERTY_APPRAISER]"
+            notes = "Allowed roles: [ROLE_JANKO2_PROPERTY_APPRAISER]"
     )
-    fun post39(
+    fun perform39(
+            @PathVariable("instanceId") instanceId: String,
             @RequestParam(value = "appraisal") @ApiParam(required = true) appraisal: MultipartFile,
             @RequestParam(value = "appraised_value") @ApiParam(required = true) appraised_value: String,
             @RequestParam(value = "approved", defaultValue = "") @ApiParam(required = false)
@@ -208,21 +221,22 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "39",
+                instanceId,
                 mapOf( "appraisal" to appraisal , "appraised_value" to appraised_value ,
                         "approved" to approved ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/48")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @PostMapping("Janko2/48/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition48",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun post48(@RequestParam(value = "delete_case") @ApiParam(required = true) delete_case: String):
-            ResponseEntity<String> {
+    fun perform48(@PathVariable("instanceId") instanceId: String, @RequestParam(value =
+    "delete_case") @ApiParam(required = true) delete_case: String): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if ( !Regex("0|1|true|false").matches(delete_case) ) {
             errors.add("delete_case" +
@@ -230,163 +244,482 @@ class Janko {
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "48",
+                instanceId,
                 mapOf( "delete_case" to delete_case ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/72")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @PostMapping("Janko2/72/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition72",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun post72(@RequestParam(value = "confirmation_insurance", defaultValue = "") @ApiParam(required
-    = false) confirmation_insurance: MultipartFile): ResponseEntity<String> {
+    fun perform72(@PathVariable("instanceId") instanceId: String, @RequestParam(value =
+    "confirmation_insurance", defaultValue = "") @ApiParam(required = false)
+    confirmation_insurance: MultipartFile): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "72",
+                instanceId,
                 mapOf( "confirmation_insurance" to confirmation_insurance ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/78")
-    @RolesAllowed("ROLE_JANKO_ACCOUNT_CLERK")
+    @PostMapping("Janko2/78/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_ACCOUNT_CLERK")
     @ApiOperation(
             value = "Transition78",
-            notes = "Allowed roles: [ROLE_JANKO_ACCOUNT_CLERK]"
+            notes = "Allowed roles: [ROLE_JANKO2_ACCOUNT_CLERK]"
     )
-    fun post78(@RequestParam(value = "payment", defaultValue = "") @ApiParam(required = false)
-               payment: MultipartFile): ResponseEntity<String> {
+    fun perform78(@PathVariable("instanceId") instanceId: String, @RequestParam(value = "payment",
+            defaultValue = "") @ApiParam(required = false) payment: MultipartFile):
+            ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "78",
+                instanceId,
                 mapOf( "payment" to payment ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/92")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @PostMapping("Janko2/92/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition92",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun post92(@RequestParam(value = "confirmation_mortgage", defaultValue = "") @ApiParam(required
-    = false) confirmation_mortgage: MultipartFile): ResponseEntity<String> {
+    fun perform92(@PathVariable("instanceId") instanceId: String, @RequestParam(value =
+    "confirmation_mortgage", defaultValue = "") @ApiParam(required = false)
+    confirmation_mortgage: MultipartFile): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "92",
+                instanceId,
                 mapOf( "confirmation_mortgage" to confirmation_mortgage ))
         return ResponseEntity("", OK)
     }
 
-    @PostMapping("Janko/94")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @PostMapping("Janko2/94/{instanceId}/finish")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition94",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun post94(@RequestParam(value = "confirmation_insurance", defaultValue = "") @ApiParam(required
-    = false) confirmation_insurance: MultipartFile): ResponseEntity<String> {
+    fun perform94(@PathVariable("instanceId") instanceId: String, @RequestParam(value =
+    "confirmation_insurance", defaultValue = "") @ApiParam(required = false)
+    confirmation_insurance: MultipartFile): ResponseEntity<String> {
         val errors = mutableListOf<String>()
         if(errors.isNotEmpty()){
             return ResponseEntity(errors.toString(), BAD_REQUEST)
         }
-        processServerRequest.post("Janko",
+        processServerRequest.perform("Janko2",
                 "94",
+                instanceId,
                 mapOf( "confirmation_insurance" to confirmation_insurance ))
         return ResponseEntity("", OK)
     }
 
-    @GetMapping("Janko/5")
-    @RolesAllowed("ROLE_JANKO_BUREAU_AGENT")
+    @GetMapping("Janko2/5"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_BUREAU_AGENT")
     @ApiOperation(
             value = "Transition5",
-            notes = "Allowed roles: [ROLE_JANKO_BUREAU_AGENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_BUREAU_AGENT]"
     )
-    fun get5() = get5Result()
+    fun view5(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "5",
+                instanceId)
+        return get5Result()
+    }
 
-    @GetMapping("Janko/30")
-    @RolesAllowed("ROLE_JANKO_UNDERWRITER")
+    @GetMapping("Janko2/30"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
     @ApiOperation(
             value = "Transition30",
-            notes = "Allowed roles: [ROLE_JANKO_UNDERWRITER]"
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
     )
-    fun get30() = get30Result()
+    fun view30(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "30",
+                instanceId)
+        return get30Result()
+    }
 
-    @GetMapping("Janko/39")
-    @RolesAllowed("ROLE_JANKO_PROPERTY_APPRAISER")
+    @GetMapping("Janko2/39"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_PROPERTY_APPRAISER")
     @ApiOperation(
             value = "Transition39",
-            notes = "Allowed roles: [ROLE_JANKO_PROPERTY_APPRAISER]"
+            notes = "Allowed roles: [ROLE_JANKO2_PROPERTY_APPRAISER]"
     )
-    fun get39() = get39Result()
+    fun view39(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "39",
+                instanceId)
+        return get39Result()
+    }
 
-    @GetMapping("Janko/53")
-    @RolesAllowed("ROLE_JANKO_LOAN_OFFICER")
+    @GetMapping("Janko2/53"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_LOAN_OFFICER")
     @ApiOperation(
             value = "Transition53",
-            notes = "Allowed roles: [ROLE_JANKO_LOAN_OFFICER]"
+            notes = "Allowed roles: [ROLE_JANKO2_LOAN_OFFICER]"
     )
-    fun get53() = get53Result()
+    fun view53(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "53",
+                instanceId)
+        return get53Result()
+    }
 
-    @GetMapping("Janko/59")
-    @RolesAllowed("ROLE_JANKO_UNDERWRITER")
+    @GetMapping("Janko2/59"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
     @ApiOperation(
             value = "Transition59",
-            notes = "Allowed roles: [ROLE_JANKO_UNDERWRITER]"
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
     )
-    fun get59() = get59Result()
+    fun view59(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "59",
+                instanceId)
+        return get59Result()
+    }
 
-    @GetMapping("Janko/61")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @GetMapping("Janko2/61"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition61",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun get61() = get61Result()
+    fun view61(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "61",
+                instanceId)
+        return get61Result()
+    }
 
-    @GetMapping("Janko/72")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @GetMapping("Janko2/72"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition72",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun get72() = get72Result()
+    fun view72(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "72",
+                instanceId)
+        return get72Result()
+    }
 
-    @GetMapping("Janko/78")
-    @RolesAllowed("ROLE_JANKO_ACCOUNT_CLERK")
+    @GetMapping("Janko2/78"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_ACCOUNT_CLERK")
     @ApiOperation(
             value = "Transition78",
-            notes = "Allowed roles: [ROLE_JANKO_ACCOUNT_CLERK]"
+            notes = "Allowed roles: [ROLE_JANKO2_ACCOUNT_CLERK]"
     )
-    fun get78() = get78Result()
+    fun view78(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "78",
+                instanceId)
+        return get78Result()
+    }
 
-    @GetMapping("Janko/96")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @GetMapping("Janko2/96"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition96",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun get96() = get96Result()
+    fun view96(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "96",
+                instanceId)
+        return get96Result()
+    }
 
-    @GetMapping("Janko/155")
-    @RolesAllowed("ROLE_JANKO_CLIENT")
+    @GetMapping("Janko2/155"/{instanceId})
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
     @ApiOperation(
             value = "Transition155",
-            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
     )
-    fun get155() = get155Result()
+    fun view155(@PathVariable("instanceId") instanceId: String) {
+        processServerRequest.get("Janko2",
+                "155",
+                instanceId)
+        return get155Result()
+    }
+
+    @PostMapping("Janko2/1/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition1",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign1(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "1",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/5/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_BUREAU_AGENT")
+    @ApiOperation(
+            value = "Transition5",
+            notes = "Allowed roles: [ROLE_JANKO2_BUREAU_AGENT]"
+    )
+    fun assign5(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "5",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/9/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_LOAN_OFFICER")
+    @ApiOperation(
+            value = "Transition9",
+            notes = "Allowed roles: [ROLE_JANKO2_LOAN_OFFICER]"
+    )
+    fun assign9(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "9",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/14/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_LOAN_OFFICER")
+    @ApiOperation(
+            value = "Transition14",
+            notes = "Allowed roles: [ROLE_JANKO2_LOAN_OFFICER]"
+    )
+    fun assign14(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "14",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/18/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition18",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign18(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "18",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/23/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
+    @ApiOperation(
+            value = "Transition23",
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
+    )
+    fun assign23(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "23",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/26/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
+    @ApiOperation(
+            value = "Transition26",
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
+    )
+    fun assign26(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "26",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/30/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
+    @ApiOperation(
+            value = "Transition30",
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
+    )
+    fun assign30(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "30",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/35/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition35",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign35(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "35",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/39/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_PROPERTY_APPRAISER")
+    @ApiOperation(
+            value = "Transition39",
+            notes = "Allowed roles: [ROLE_JANKO2_PROPERTY_APPRAISER]"
+    )
+    fun assign39(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "39",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/48/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition48",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign48(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "48",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/53/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_LOAN_OFFICER")
+    @ApiOperation(
+            value = "Transition53",
+            notes = "Allowed roles: [ROLE_JANKO2_LOAN_OFFICER]"
+    )
+    fun assign53(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "53",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/59/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_UNDERWRITER")
+    @ApiOperation(
+            value = "Transition59",
+            notes = "Allowed roles: [ROLE_JANKO2_UNDERWRITER]"
+    )
+    fun assign59(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "59",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/61/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition61",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign61(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "61",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/72/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition72",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign72(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "72",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/78/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_ACCOUNT_CLERK")
+    @ApiOperation(
+            value = "Transition78",
+            notes = "Allowed roles: [ROLE_JANKO2_ACCOUNT_CLERK]"
+    )
+    fun assign78(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "78",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/92/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition92",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign92(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "92",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/94/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition94",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign94(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "94",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/96/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition96",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign96(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "96",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
+
+    @PostMapping("Janko2/155/{instanceId}/assign")
+    @RolesAllowed("ROLE_JANKO2_CLIENT")
+    @ApiOperation(
+            value = "Transition155",
+            notes = "Allowed roles: [ROLE_JANKO2_CLIENT]"
+    )
+    fun assign155(@PathVariable("instanceId") instanceId: String): ResponseEntity<String> {
+        processServerRequest.assign("Janko2",
+                "155",
+                instanceId)
+        return ResponseEntity("", OK)
+    }
 
     class get5Result(
             name: String = "",

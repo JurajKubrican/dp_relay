@@ -4,12 +4,21 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProcessServerRequest {
-    fun get(netId: String, transitionId: String): Any {
+    fun get(netId: String, transitionId: String, instanceId: String): Any {
         return {}
     }
 
 
-    fun post(netId: String, transitionId: String, data: Map<String, Any>): Any {
+    fun perform(netId: String, transitionId: String, instanceId: String, data: Map<String, Any>): Any {
+        return {}
+    }
+
+
+    fun assign(netId: String, transitionId: String, instanceId: String): Any {
+        return {}
+    }
+
+    fun delegate(netId: String, transitionId: String, instanceId: String, user: String): Any {
         return {}
     }
 }
