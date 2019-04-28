@@ -1,1 +1,1 @@
-endpoint-shell
+relay
