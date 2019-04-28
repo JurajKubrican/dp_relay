@@ -1,4 +1,4 @@
-package sk.knet.dp.endpointshell
+package sk.knet.dp.relay
 
 import org.junit.Test
 import org.junit.runner.RunWith

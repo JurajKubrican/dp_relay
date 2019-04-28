@@ -1,4 +1,4 @@
-package sk.knet.dp.endpointshell
+package sk.knet.dp.relay
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -6,8 +6,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @SpringBootApplication
 @EnableWebSecurity
-class EndpointShellApplication
+class RelayApplication
 
 fun main(args: Array<String>) {
-    runApplication<EndpointShellApplication>(*args)
+    runApplication<RelayApplication>(*args)
 }

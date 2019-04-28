@@ -1,6 +1,7 @@
-//package sk.knet.dp.endpointshell
+//package sk.knet.dp.relay
 //
 //import io.swagger.annotations.ApiOperation
+//import io.swagger.annotations.ApiParam
 //import org.springframework.beans.factory.annotation.Autowired
 //import org.springframework.http.HttpStatus.BAD_REQUEST
 //import org.springframework.http.HttpStatus.OK
@@ -21,12 +22,13 @@
 //    lateinit var processServerRequest: ProcessServerRequest
 //
 //    @PostMapping("Janko/1")
-//    @RolesAllowed("ROLE_JANKO_CLIENT")
+//    @RolesAllowed("ROLE_JANKO_CLIENT", "ROLE_ADMIN", "ROLE_USER")
 //    @ApiOperation(
 //            value = "Transition1",
 //            notes = "Allowed roles: [ROLE_JANKO_CLIENT]"
 //    )
 //    fun post1(
+//            @ApiParam(value = "name", required = true, allowableValues = "janko,jurko", type = "String")
 //            @RequestParam(value = "name") name: String,
 //            @RequestParam(value = "surname") surname: String,
 //            @RequestParam(value = "date_of_birth") date_of_birth: String,
