@@ -18,6 +18,11 @@ class ProcessServerRequest {
         return {}
     }
 
+
+    fun cancel(netId: String, transitionId: String, instanceId: String): Any {
+        return {}
+    }
+
     fun delegate(netId: String, transitionId: String, instanceId: String, user: String): Any {
         return {}
     }
