@@ -9,7 +9,7 @@ class ProcessServerRequest {
     }
 
 
-    fun perform(netId: String, transitionId: String, instanceId: String, data: Map<String, Any>): Any {
+    fun data(netId: String, transitionId: String, instanceId: String, data: Map<String, Any>): Any {
         return {}
     }
 
@@ -20,6 +20,11 @@ class ProcessServerRequest {
 
 
     fun cancel(netId: String, transitionId: String, instanceId: String): Any {
+        return {}
+    }
+
+
+    fun finish(netId: String, transitionId: String, instanceId: String): Any {
         return {}
     }
 
