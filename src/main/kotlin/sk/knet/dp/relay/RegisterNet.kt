@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile
 
 
 @RestController
-class MockRoutes {
+class RegisterNet {
 
     @ResponseBody
     @PostMapping("/")
