@@ -41,7 +41,6 @@ class RegisterNet {
             netId: String): String {
 
 
-
         return "Done"
 
     }
@@ -49,7 +48,7 @@ class RegisterNet {
     @ResponseBody
     @DeleteMapping("/")
     final fun deleteClient(
-            @ApiParam(name="netId", example = "netID123")
+            @ApiParam(name = "netId", example = "netID123")
             @RequestParam(value = "netId") netId: String): String {
 
 
@@ -62,7 +61,6 @@ class RegisterNet {
     final fun getClient(): List<String>? {
         return emptyList()
     }
-
 
 
 }
